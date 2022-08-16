@@ -1,5 +1,6 @@
-# frame per second
+# game title
 TITLE = "Checkers"
+# frame per second
 FPS = 60
 
 # board dimensions
@@ -15,3 +16,5 @@ BOARD_THEMES = [
     [(134, 166, 102), (218, 237, 207)],
     [(140, 162, 173), (222, 227, 230)]
 ]
+# default theme: from 0 to len(BOARD_THEMES) - 1 inclusively
+DEFAULT_THEME = 0

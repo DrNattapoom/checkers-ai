@@ -1,5 +1,3 @@
-import pygame
-
 from checkers.game import Game
 
 def main():
