@@ -27,10 +27,20 @@ class Game:
                 if event.type == pygame.QUIT:
                     end = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    pass
+                    position = pygame.mouse.get_pos()
+                    row, col = self.get_position_from_mouse(position)
+                    piece = self.checkers.get_piece(row, col)
+                    # test move
+                    self.checkers.move(piece, 4, 3)
             self.update()
 
         pygame.quit()
+
+    def get_position_from_mouse(self, position) -> tuple:
+        x, y = position
+        row = y // SQUARE_SIZE
+        col = x // SQUARE_SIZE
+        return row, col
 
     def update(self) -> None:
         self.draw(self.win)
