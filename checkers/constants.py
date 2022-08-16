@@ -1,8 +1,3 @@
-# game title
-TITLE = "Checkers"
-# frame per second
-FPS = 60
-
 # board dimensions
 WIDTH = HEIGHT = 800
 ROWS = COLS = 8

@@ -1,10 +1,15 @@
 import pygame
 
 from checkers.checkers import Checkers
-from checkers.constants import BLACK, BOARD_THEMES, COLS, DEFAULT_THEME, FPS, HEIGHT, ROWS, SQUARE_SIZE, TITLE, WHITE, WIDTH
+from checkers.constants import BLACK, BOARD_THEMES, COLS, DEFAULT_THEME, HEIGHT, ROWS, SQUARE_SIZE, WHITE, WIDTH
 from checkers.piece import Piece
 
 class Game:
+
+    # game title
+    TITLE = "Checkers"
+    # frame per second
+    FPS = 60
 
     def __init__(self) -> None:
         self.win = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -12,12 +17,12 @@ class Game:
         self.theme = DEFAULT_THEME
     
     def play(self):
-        pygame.display.set_caption(TITLE)
+        pygame.display.set_caption(Game.TITLE)
         clock = pygame.time.Clock()
         end = False
 
         while not end:
-            clock.tick(FPS)
+            clock.tick(Game.FPS)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     end = True
