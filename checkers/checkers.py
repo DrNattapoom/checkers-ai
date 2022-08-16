@@ -1,4 +1,5 @@
 from checkers.board import Board
+from checkers.piece import Piece
 
 class Checkers:
 
@@ -8,5 +9,8 @@ class Checkers:
         self.promoted = [0, 0]
         self.selected = None
 
-    def get_board(self) -> None:
-        return self.board.get_board()
+    def get_board(self) -> Board:
+        return self.board
+
+    def get_piece(self, row, col) -> Piece:
+        return self.board.get_piece(row, col)
