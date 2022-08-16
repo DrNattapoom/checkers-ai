@@ -15,6 +15,9 @@ class Piece:
     def move(self, row, col) -> None:
         self.row = row
         self.col = col
+
+    def promote(self) -> None:
+        self.is_promoted = True
         
     def get_coordinates(self):
         return [

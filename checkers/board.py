@@ -18,6 +18,17 @@ class Board:
                 else:
                     color = WHITE if (row < 3) else BLACK
                     self.board[row].append(Piece(row, col, color))
+
+    def remove(self, pieces) -> list:
+        removed = [0, 0]
+        for piece in pieces:
+            # remove the piece by setting the square to None
+            self.board[piece.row][piece.col] = None
+            if (piece is not None):
+                # update the number of remaining pieces of the piece color
+                color_idx = 0 if (piece.color == BLACK) else 1
+                removed[color_idx] += 1
+        return removed
     
     def get_board(self) -> list[list]:
         return self.board

@@ -29,9 +29,7 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
                     row, col = self.get_position_from_mouse(position)
-                    piece = self.checkers.get_piece(row, col)
-                    # test move
-                    self.checkers.move(piece, 4, 3)
+                    self.checkers.select(row, col)
             self.update()
 
         pygame.quit()
@@ -67,6 +65,14 @@ class Game:
             if (piece.is_promoted):
                 pygame.draw.circle(win, crown, coordinates, radius / 2)
                 pygame.draw.circle(win, piece.color, coordinates, radius / 2 - Piece.OUTLINE)
+        def draw_legal_moves(legal_moves) -> None:
+            for legal_move in legal_moves:
+                row, col = legal_move
+                alpha = (100,)
+                # define surface so that alpha level can be adjusted
+                surface = pygame.Surface((win.get_width(), win.get_height()), pygame.SRCALPHA)
+                pygame.draw.circle(surface, BLACK + alpha, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), radius = 20)
+                self.win.blit(surface, (0, 0))
         draw_board()
         for row in range(ROWS):
             for col in range(COLS):
@@ -74,3 +80,4 @@ class Game:
                 # check if there is a piece in the square
                 if piece is not None:
                     draw_piece(piece)
+        draw_legal_moves(self.checkers.get_legal_moves())
