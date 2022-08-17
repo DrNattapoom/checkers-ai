@@ -157,3 +157,6 @@ class Checkers:
 
     def get_piece(self, row, col) -> Piece:
         return self.board.get_piece(row, col)
+
+    def get_winner(self) -> tuple:
+        return WHITE if (self.remaining[0] <= 0) else BLACK if (self.remaining[1] <= 0) else None

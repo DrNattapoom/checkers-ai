@@ -23,6 +23,10 @@ class Game:
 
         while not end:
             clock.tick(Game.FPS)
+
+            winner = self.get_winner()
+            end = winner is not None
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     end = True
@@ -32,7 +36,15 @@ class Game:
                     self.checkers.select(row, col)
             self.update()
 
+        self.display_winner(winner)
         pygame.quit()
+
+    def display_winner(self, winner):
+        text = "BLACK" if (winner == BLACK) else "WHITE" if (winner == WHITE) else None
+        print(text, "WON")
+    
+    def get_winner(self):
+        return self.checkers.get_winner()
 
     def get_position_from_mouse(self, position) -> tuple:
         x, y = position
