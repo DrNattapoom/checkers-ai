@@ -1,4 +1,4 @@
-from checkers.constants import SQUARE_SIZE
+from .constants import SQUARE_SIZE
 
 class Piece:
 
@@ -19,7 +19,7 @@ class Piece:
     def promote(self) -> None:
         self.is_promoted = True
         
-    def get_coordinates(self):
+    def get_coordinates(self) -> list:
         return [
             SQUARE_SIZE * self.col + SQUARE_SIZE // 2,
             SQUARE_SIZE * self.row + SQUARE_SIZE // 2

@@ -1,8 +1,9 @@
 import pygame
 
-from checkers.checkers import Checkers
-from checkers.constants import BLACK, BOARD_THEMES, COLS, DEFAULT_THEME, HEIGHT, ROWS, SQUARE_SIZE, WHITE, WIDTH
-from checkers.piece import Piece
+from ai.minimax import Minimax
+from .checkers import Checkers
+from .constants import BLACK, BOARD_THEMES, COLS, DEFAULT_THEME, HEIGHT, ROWS, SQUARE_SIZE, WHITE, WIDTH
+from .piece import Piece
 
 class Game:
 
@@ -16,16 +17,21 @@ class Game:
         self.checkers = Checkers()
         self.theme = DEFAULT_THEME
     
-    def play(self):
+    def play(self) -> None:
         pygame.display.set_caption(Game.TITLE)
         clock = pygame.time.Clock()
         end = False
+
+        minimax_ai = Minimax(self)
 
         while not end:
             clock.tick(Game.FPS)
 
             winner = self.get_winner()
             end = winner is not None
+
+            if (self.checkers.get_turn() == WHITE):
+                minimax_ai.move(WHITE)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -39,12 +45,15 @@ class Game:
         self.display_winner(winner)
         pygame.quit()
 
-    def display_winner(self, winner):
+    def display_winner(self, winner) -> None:
         text = "BLACK" if (winner == BLACK) else "WHITE" if (winner == WHITE) else None
         print(text, "WON")
     
-    def get_winner(self):
+    def get_winner(self) -> tuple:
         return self.checkers.get_winner()
+
+    def get_checkers(self) -> Checkers:
+        return self.checkers
 
     def get_position_from_mouse(self, position) -> tuple:
         x, y = position
