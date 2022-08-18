@@ -7,6 +7,7 @@ class Checkers:
     def __init__(self, board = Board()) -> None:
         self.board = board
         self.turn = BLACK
+        self.winner = None
         self.selected = None
         self.legal_moves = {}
 
@@ -25,6 +26,7 @@ class Checkers:
                 to_be_captured = self.legal_moves[(row, col)]
                 if (to_be_captured):
                     self.board.remove(to_be_captured)
+                self.set_winner(self.board.get_winner())
                 self.change_turn()
                 return True
             else:
@@ -53,7 +55,10 @@ class Checkers:
         return self.board.get_piece(row, col)
 
     def get_winner(self) -> tuple:
-        return self.board.get_winner()
+        return self.winner
+
+    def set_winner(self, winner) -> None:
+        self.winner = winner
 
     def set_board(self, board) -> None:
         self.board = board

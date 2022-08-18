@@ -16,37 +16,48 @@ class Game:
         self.win = pygame.display.set_mode((WIDTH, HEIGHT))
         self.checkers = Checkers()
         self.theme = DEFAULT_THEME
+        self.winner = None
+        self.end = False
     
     def play(self) -> None:
         pygame.display.set_caption(Game.TITLE)
         clock = pygame.time.Clock()
-        end = False
 
         minimax_ai = Minimax(self)
 
-        while not end:
+        while not self.end:
             clock.tick(Game.FPS)
 
-            winner = self.get_winner()
-            end = winner is not None
+            turn = self.checkers.get_turn()
 
-            if (self.checkers.get_turn() == WHITE):
+            if (self.no_legal_moves(turn, minimax_ai)):
+                print("no legal moves allowed")
+                winner = WHITE if (self.checkers.get_turn() == BLACK) else BLACK
+                self.winner = self.checkers.set_winner(winner)
+            if (turn == WHITE):
                 minimax_ai.move(WHITE)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    end = True
+                    self.end = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
                     row, col = self.get_position_from_mouse(position)
                     self.checkers.select(row, col)
+            
+            self.winner = self.checkers.get_winner()
+            self.end = self.winner is not None
+            
             self.update()
 
-        self.display_winner(winner)
+        self.display_winner()
         pygame.quit()
 
-    def display_winner(self, winner) -> None:
-        text = "BLACK" if (winner == BLACK) else "WHITE" if (winner == WHITE) else None
+    def no_legal_moves(self, color, ai):
+        return not ai.get_possible_moves_by_color(self.checkers.get_board(), color)
+
+    def display_winner(self) -> None:
+        text = "BLACK" if (self.winner == BLACK) else "WHITE" if (self.winner == WHITE) else None
         print(text, "WON")
     
     def get_winner(self) -> tuple:
