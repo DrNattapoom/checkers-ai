@@ -24,4 +24,8 @@ class Piece:
             SQUARE_SIZE * self.col + SQUARE_SIZE // 2,
             SQUARE_SIZE * self.row + SQUARE_SIZE // 2
         ]
+
+    def __repr__(self) -> str:
+        color = "Black" if (self.color == (0, 0, 0)) else "White"
+        return  f"{color}: {(self.row, self.col)}"
         
